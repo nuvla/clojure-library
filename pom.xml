@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>sixsq.nuvla.clojure-api</groupId>
+  <artifactId>clojure-api</artifactId>
+  <packaging>pom</packaging>
+  <version>3.69-SNAPSHOT</version>
+  <name>clojure-api</name>
+  <url>http://sixsq.com</url>
+
+  <parent>
+    <groupId>com.sixsq.slipstream</groupId>
+    <artifactId>SlipStreamCommunity</artifactId>
+    <version>3.69-SNAPSHOT</version>
+    <relativePath>../SlipStream/community</relativePath>
+  </parent>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
+
+  <modules>
+    <module>cimi</module>
+  </modules>
+
+  <scm>
+    <connection>${scm.read}/clojure-api.git</connection>
+    <developerConnection>${scm.write}/clojure-api.git</developerConnection>
+    <url>${scm.public}/clojure-api</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <repositories>
+
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>slipstream.releases</id>
+      <name>SlipStream Releases</name>
+      <url>https://nexus.sixsq.com/content/repositories/releases-community-rhel7</url>
+    </repository>
+
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>slipstream.snapshots</id>
+      <name>SlipStream Snapshots</name>
+      <url>https://nexus.sixsq.com/content/repositories/snapshots-community-rhel7</url>
+    </repository>
+
+  </repositories>
+
+</project>
+
