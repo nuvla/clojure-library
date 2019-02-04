@@ -24,7 +24,7 @@ Here is the the example of `slipstream.context`
 ```
 [contextualization]
 diid = <uuid-of-slipstream-run>
-cookie = com.sixsq.slipstream.cookie=<cookie-content> Path:/
+cookie = com.sixsq.nuvla.cookie=<cookie-content> Path:/
 serviceurl = https://nuv.la
 node_instance_name = orchestrator-exoscale-ch-gva
 ```
@@ -32,7 +32,7 @@ node_instance_name = orchestrator-exoscale-ch-gva
 Require the run namespace and use the functions to interact with the run
 
 ```clojure
-(require '[sixsq.slipstream.client.api.run :as r])
+(require '[sixsq.nuvla.client.api.run :as r])
 
 (r/get-state)
 (r/action-scale-up "web-server" 3)

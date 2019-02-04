@@ -3,7 +3,7 @@
 
   <artifactId>clojure-api-dep</artifactId>
   <packaging>pom</packaging>
-  <name>clojure-api/cimi</name>
+  <name>clojure-api/dep</name>
 
   <url>http://sixsq.com</url>
   <parent>

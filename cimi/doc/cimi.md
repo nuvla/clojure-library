@@ -9,8 +9,8 @@ already follow the CIMI REST interface.
 
 The CIMI search (search), create (add), read (get), update (edit), and
 delete (delete) operations are defined in the `cimi` protocol in the
-`sixsq.slipstream.client.api.cimi` namespace.  A separate namespace 
-`sixsq.slipstream.client.api.authn` wraps some of the CIMI functions to
+`sixsq.nuvla.client.api.cimi` namespace.  A separate namespace
+`sixsq.nuvla.client.api.authn` wraps some of the CIMI functions to
 simplify the authentication process. 
 
 To use the CIMI and authn protocol functions, you must instantiate either
@@ -22,10 +22,10 @@ core.async channel.
 ```clojure
 ;; Demonstrating use from the REPL
 
-(require '[sixsq.slipstream.client.api.cimi :as cimi])
-(require '[sixsq.slipstream.client.api.authn :as authn])
-(require '[sixsq.slipstream.client.async :as async])
-(require '[sixsq.slipstream.client.sync :as sync])
+(require '[sixsq.nuvla.client.api.cimi :as cimi])
+(require '[sixsq.nuvla.client.api.authn :as authn])
+(require '[sixsq.nuvla.client.async :as async])
+(require '[sixsq.nuvla.client.sync :as sync])
 (require '[clojure.core.async :refer [<!! close!]])
 (require '[kvlt.core :as kvlt])
 
