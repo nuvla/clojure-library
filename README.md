@@ -1,16 +1,12 @@
-# SlipStream Clojure API
+# Nuvla Clojure Client Library
 
-SlipStream Clojure library to query [SlipStream server API][ss-api].
+Nuvla clojure client library to interact with the Nuvla REST API.
 
-The API documentation is available on the [GitHub Pages site for this
-repository][gh-pages].
+# Copyright
 
-# License and copyright
+Copyright &copy; 2019 SixSq Sàrl
 
-Copyright (C) 2016 SixSq Sarl (sixsq.com)
-
-The code in the public repositories is licensed under the Apache
-license.
+# License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you
 may not use this file except in compliance with the License.  You may
@@ -23,6 +19,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 implied.  See the License for the specific language governing
 permissions and limitations under the License.
-
-[gh-pages]: https://slipstream.github.com/SlipStreamClojureAPI 
-[ss-api]: http://ssapi.sixsq.com/
