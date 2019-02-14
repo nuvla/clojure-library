@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>sixsq.nuvla.clojure-api</groupId>
-  <artifactId>clojure-api</artifactId>
+  <groupId>sixsq.nuvla.clojure-library</groupId>
+  <artifactId>clojure-library</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>clojure-api</name>
+  <name>clojure-library</name>
 
   <parent>
-    <groupId>com.sixsq.slipstream</groupId>
-    <artifactId>SlipStreamCommunity</artifactId>
-    <version>3.69-SNAPSHOT</version>
-    <relativePath>../SlipStream/community</relativePath>
+    <groupId>sixsq.nuvla.parent</groupId>
+    <artifactId>pom</artifactId>
+    <version>1.0.0</version>
   </parent>
 
   <licenses>
@@ -19,6 +19,34 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0</url>
     </license>
   </licenses>
+
+  <repositories>
+
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>nuvla.releases</id>
+      <name>Nuvla Releases</name>
+      <url>https://nexus.sixsq.com/content/repositories/nuvla-releases</url>
+    </repository>
+
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>nuvla.snapshots</id>
+      <name>Nuvla Snapshots</name>
+      <url>https://nexus.sixsq.com/content/repositories/nuvla-snapshots</url>
+    </repository>
+
+  </repositories>
 
   <profiles>
     <profile>

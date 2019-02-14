@@ -1,10 +1,10 @@
-(def +version+ "3.69-SNAPSHOT")
+(def +version+ "0.0.1-SNAPSHOT")
 
-(defproject sixsq.nuvla/clojure-api "3.69-SNAPSHOT"
+(defproject sixsq.nuvla/clojure-library "0.0.1-SNAPSHOT"
 
   :description "nuvla clojure library"
 
-  :url "https://github.com/nuvla/clojure-api"
+  :url "https://github.com/nuvla/clojure-library"
 
   :license {:name         "Apache 2.0"
             :url          "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -29,10 +29,10 @@
   :aot [sixsq.nuvla.client.api
         sixsq.nuvla.client.authn]
 
-  :codox {:name         "sixsq.nuvla/clojure-api"
+  :codox {:name         "sixsq.nuvla/clojure-library"
           :version      ~+version+
           :source-paths #{"src/clj" "src/cljc"}
-          :source-uri   "https://github.com/nuvla/clojure-api/blob/master/jar/{filepath}#L{line}"
+          :source-uri   "https://github.com/nuvla/clojure-library/blob/master/jar/{filepath}#L{line}"
           :language     :clojure
           :metadata     {:doc/format :markdown}}
 
