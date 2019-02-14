@@ -79,8 +79,8 @@
      the metadata of the collection and search. The returned document is in EDN
      format.
 
-     This function also supports all of the CIMI query options: `:$first`,
-     `:$last`, `:$filter`, `:$orderby`, `:$select`, `:$aggregation`. It also
+     This function also supports all of the CIMI query options: `:first`,
+     `:last`, `:filter`, `:orderby`, `:select`, `:aggregation`. It also
      supports the `:sse?` and `:events` options described in the `get` function
      description.")
 

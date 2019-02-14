@@ -67,7 +67,7 @@
   [token {:keys [baseURI] :as cep} op collection-name-or-url options]
   (let [url (or (u/get-collection-url cep collection-name-or-url)
                 (u/verify-collection-url cep collection-name-or-url))
-        opts (-> (cu/req-opts token (url/map->query {"$last" 0}))
+        opts (-> (cu/req-opts token (url/map->query {"last" 0}))
                  (merge options)
                  (assoc :type "application/x-www-form-urlencoded")
                  (assoc-op-url-chan op baseURI))]
