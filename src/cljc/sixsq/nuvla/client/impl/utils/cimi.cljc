@@ -109,29 +109,29 @@
 
 (defn get-collection-url
   "Extracts the absolute URL for a the named collection from the cloud entry
-   point. The collection name can be provided either as a string or a keyword.
-   The capitalization of the collection name is significant; normally the value
-   is camel-cased and has a trailing 's'. Returns nil if the collection does
-   not exist."
-  [{:keys [baseURI] :as cep} collection-name]
-  (when (and baseURI collection-name)
+   point. The collection name can be provided either as a string or a keyword
+   (preferred). Returns nil if the collection does not exist."
+  [{:keys [base-uri collections] :as cep} collection-name]
+  (when (and base-uri collection-name)
     (let [collection (keyword collection-name)]
-      (when-let [href (-> cep collection :href)]
-        (str baseURI href)))))
+      (some->> collections
+               collection
+               :href
+               (str base-uri)))))
 
 
 (defn verify-collection-url
   "Verifies that the value of `collection-url` is the URL for one of the
    collections defined in the cloud entry point. If it is, then the URL is
    returned; if not, then nil is returned."
-  [{:keys [baseURI] :as cep} collection-url]
-  (when (and baseURI collection-url)
-    (let [collection-urls-set (->> cep
+  [{:keys [base-uri collections] :as cep} collection-url]
+  (when (and base-uri collection-url)
+    (let [collection-urls-set (->> collections
                                    vals
                                    (filter map?)
                                    (map :href)
                                    (remove nil?)
-                                   (map #(str baseURI %))
+                                   (map #(str base-uri %))
                                    set)]
       (collection-urls-set collection-url))))
 
@@ -139,7 +139,7 @@
 (defn extract-op-url
   "Transducer that extracts the operation URL for the given operation. The
    return value is a possibly empty list."
-  [op baseURI]
+  [op base-uri]
   (comp
     (map e/throw-if-error)
     (map :body)
@@ -148,4 +148,4 @@
     cat
     (map (juxt :rel :href))
     (filter (fn [[k _]] (= op k)))
-    (map (fn [[_ v]] (str baseURI v)))))
+    (map (fn [[_ v]] (str base-uri v)))))

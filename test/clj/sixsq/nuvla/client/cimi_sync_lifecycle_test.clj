@@ -76,7 +76,7 @@
             cep (cimi/cloud-entry-point context)]
         (is context)
         (is (map? cep))
-        (is (:baseURI cep))
+        (is (:base-uri cep))
         (is (:events cep))
 
         ;; try logging in with incorrect credentials

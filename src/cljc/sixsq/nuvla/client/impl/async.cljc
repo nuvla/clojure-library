@@ -52,36 +52,36 @@
 (defn- create-op-url-chan
   "Creates a channel that extracts the operations from a collection or
    resource."
-  [op baseURI]
-  (chan 1 (u/extract-op-url op baseURI) identity))
+  [op base-uri]
+  (chan 1 (u/extract-op-url op base-uri) identity))
 
 
 (defn- assoc-op-url-chan
-  [m op baseURI]
-  (assoc m :chan (create-op-url-chan op baseURI)))
+  [m op base-uri]
+  (assoc m :chan (create-op-url-chan op base-uri)))
 
 
 (defn get-collection-op-url
   "Returns the URL for the given operation and collection within a channel.
    The collection can be identified either by its name or URL."
-  [token {:keys [baseURI] :as cep} op collection-name-or-url options]
+  [token {:keys [base-uri] :as cep} op collection-name-or-url options]
   (let [url (or (u/get-collection-url cep collection-name-or-url)
                 (u/verify-collection-url cep collection-name-or-url))
         opts (-> (cu/req-opts token (url/map->query {"last" 0}))
                  (merge options)
                  (assoc :type "application/x-www-form-urlencoded")
-                 (assoc-op-url-chan op baseURI))]
+                 (assoc-op-url-chan op base-uri))]
     (http/put url opts)))
 
 
 (defn get-resource-op-url
   "Returns the URL for the given operation and collection within a channel."
   [{:keys [token cep] :as state} op url-or-id options]
-  (let [baseURI (:baseURI cep)
-        url (cu/ensure-url baseURI url-or-id)
+  (let [base-uri (:base-uri cep)
+        url (cu/ensure-url base-uri url-or-id)
         opts (-> (cu/req-opts token)
                  (merge options)
-                 (assoc-op-url-chan op baseURI))]
+                 (assoc-op-url-chan op base-uri))]
     (http/get url opts)))
 
 
@@ -128,7 +128,7 @@
   "Reads the CIMI resource identified by the URL or resource id. Returns the
    resource as an edn data structure in a channel."
   [{:keys [token cep] :as state} url-or-id options]
-  (let [url (cu/ensure-url (:baseURI cep) url-or-id)]
+  (let [url (cu/ensure-url (:base-uri cep) url-or-id)]
     (let [opts (-> (cu/req-opts token)
                    (merge options)
                    assoc-chan)]
@@ -139,7 +139,7 @@
   "Reads the CIMI resource identified by the URL or resource id. Returns the
    resource as an edn data structure in a channel."
   [{:keys [token cep] :as state} url-or-id options]
-  (http/sse (cu/ensure-url (:baseURI cep) url-or-id)
+  (http/sse (cu/ensure-url (:base-uri cep) url-or-id)
             (cond-> (assoc-sse-chan options)
                     token (assoc :options {:headers {:cookie token}}))))
 
@@ -208,10 +208,10 @@
   "Returns (on a channel) the resource ID of the current session. If there is
    no current session (user is not logged in) or an error occurs, then nil will
    be returned on the channel."
-  [{:keys [token cep] :as state} options]
+  [state options]
   (go
-    (let [[sessions token] (<! (search state "sessions" options))]
-      [(-> sessions :sessions first :id) token])))
+    (let [[sessions token] (<! (search state :session options))]
+      [(-> sessions :resources first :id) token])))
 
 
 (defn logout
@@ -219,7 +219,7 @@
    function returns a tuple with the request response and the token passed back
    from the server (typically a cookie invalidating any previous one). The
    method will return nil if there was no current session."
-  [{:keys [token cep] :as state} options]
+  [state options]
   (go
     (let [[session-id _] (<! (current-session state options))]
       (when session-id
@@ -234,6 +234,6 @@
   ([state login-params]
    (login state login-params nil))
   ([state login-params options]
-   (add state "sessions" {:sessionTemplate login-params} options)))
+   (add state :session {:template login-params} options)))
 
 

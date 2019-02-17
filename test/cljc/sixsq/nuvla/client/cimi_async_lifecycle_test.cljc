@@ -88,7 +88,7 @@
                cep (<! (cimi/cloud-entry-point context))]
            #_(is context)
            #_(is (map? cep))
-           #_(is (:baseURI cep))
+           #_(is (:base-uri cep))
            #_(is (:events cep))
 
            ;; try logging in with incorrect credentials

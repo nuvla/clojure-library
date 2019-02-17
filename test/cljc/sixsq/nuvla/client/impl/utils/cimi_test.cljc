@@ -7,22 +7,22 @@
     [sixsq.nuvla.client.impl.utils.cimi :as t]
     [sixsq.nuvla.client.impl.utils.json :as json]))
 
-(def test-cep {:id               "cloud-entry-point"
-               :resourceURI      "http://schemas.dmtf.org/cimi/2/CloudEntryPoint"
-               :created          "2015-09-01T20:36:16.891Z"
-               :updated          "2015-09-01T20:36:16.891Z"
-               :baseURI          "https://localhost:8201/api/"
-               :attributes       {:href "attribute"}
-               :connectors       {:href "connector"}
-               :events           {:href "event"}
-               :licenses         {:href "license"}
-               :licenseTemplates {:href "license-template"}
-               :usages           {:href "usage"}
-               :networkServices  {:href "network-service"}
-               :serviceOffers    {:href "service-offer"}
-               :usageRecords     {:href "usage-record"}
-               :acl              {:owner {:principal "ADMIN", :type "ROLE"}
-                                  :rules [{:principal "ANON", :type "ROLE", :right "VIEW"}]}})
+(def test-cep {:id          "cloud-entry-point"
+               :resourceURI "http://schemas.dmtf.org/cimi/2/CloudEntryPoint"
+               :created     "2015-09-01T20:36:16.891Z"
+               :updated     "2015-09-01T20:36:16.891Z"
+               :base-uri     "https://localhost:8201/api/"
+               :collections {:attributes       {:href "attribute"}
+                             :connectors       {:href "connector"}
+                             :events           {:href "event"}
+                             :licenses         {:href "license"}
+                             :licenseTemplates {:href "license-template"}
+                             :usages           {:href "usage"}
+                             :networkServices  {:href "network-service"}
+                             :serviceOffers    {:href "service-offer"}
+                             :usageRecords     {:href "usage-record"}}
+               :acl         {:owner {:principal "ADMIN", :type "ROLE"}
+                             :rules [{:principal "ANON", :type "ROLE", :right "VIEW"}]}})
 
 (def ops-example {:operations [{:rel  "add"
                                 :href "add"}
@@ -122,7 +122,7 @@
 
 (deftest check-verify-collection-url
   (is (nil? (t/verify-collection-url nil nil)))
-  (is (nil? (t/verify-collection-url (dissoc test-cep :baseURI) nil)))
+  (is (nil? (t/verify-collection-url (dissoc test-cep :base-uri) nil)))
   (are [url] (= url (t/verify-collection-url test-cep url))
              "https://localhost:8201/api/attribute"
              "https://localhost:8201/api/connector"
@@ -135,11 +135,11 @@
              "https://localhost:8201/api/usage-record"))
 
 (deftest check-extract-op-url-tests
-  (let [baseURI "https://localhost:8201/api/"
+  (let [base-uri "https://localhost:8201/api/"
         body ops-example
         json (json/edn->json body)
         req {:body json}]
-    (are [op] (= (str baseURI op) (first (eduction (t/extract-op-url op baseURI) [req])))
+    (are [op] (= (str base-uri op) (first (eduction (t/extract-op-url op base-uri) [req])))
               "add"
               "edit"
               "delete")))
@@ -149,21 +149,21 @@
    (extract-op-url-tests nil))
   ([done]
    (go
-     (let [baseURI "https://localhost:8201/api/"
+     (let [base-uri "https://localhost:8201/api/"
            body ops-example
            json (json/edn->json body)]
-       (let [c (chan 1 (t/extract-op-url "add" baseURI) identity)
+       (let [c (chan 1 (t/extract-op-url "add" base-uri) identity)
              _ (>! c {:body json})
              result (<! c)]
-         (is (= (str baseURI "add") result)))
-       (let [c (chan 1 (t/extract-op-url "edit" baseURI) identity)
+         (is (= (str base-uri "add") result)))
+       (let [c (chan 1 (t/extract-op-url "edit" base-uri) identity)
              _ (>! c {:body json})
              result (<! c)]
-         (is (= (str baseURI (name "edit")) result)))
-       (let [c (chan 1 (t/extract-op-url "delete" baseURI) identity)
+         (is (= (str base-uri (name "edit")) result)))
+       (let [c (chan 1 (t/extract-op-url "delete" base-uri) identity)
              _ (>! c {:body json})
              result (<! c)]
-         (is (= (str baseURI "delete") result))))
+         (is (= (str base-uri "delete") result))))
      (if done (done)))))
 
 (deftest check-extract-op-url-tests-with-chan

@@ -4,9 +4,9 @@
     [sixsq.nuvla.client.impl.utils.common :as t]))
 
 (deftest test-ensure-url
-  (let [baseUrl "https://nuv.la"
-        fullUrl "https://nuv.la/api/resource/id"]
-    (is (= (t/ensure-url baseUrl fullUrl) fullUrl))
-    (is (= (t/ensure-url baseUrl "/api/resource/id") fullUrl))
-    (is (= (t/ensure-url-slash baseUrl fullUrl) fullUrl))
-    (is (= (t/ensure-url-slash baseUrl "api/resource/id") fullUrl))))
+  (let [base-url "https://nuv.la"
+        full-url "https://nuv.la/api/resource/id"]
+    (is (= (t/ensure-url base-url full-url) full-url))
+    (is (= (t/ensure-url base-url "/api/resource/id") full-url))
+    (is (= (t/ensure-url-slash base-url full-url) full-url))
+    (is (= (t/ensure-url-slash base-url "api/resource/id") full-url))))

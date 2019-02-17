@@ -30,7 +30,7 @@
     [this login-params options]
     "Uses the given `login-params` to log into the SlipStream server. The
      `login-params` must be a map containing an `:href` element giving the id
-     of the sessionTemplate resource and any other attributes required for the
+     of the session-template resource and any other attributes required for the
      login method. The `login-params` for logging in with a username and
      password would be similar to the following:
 
@@ -46,7 +46,7 @@
      descriptive message.
 
      Authenticating using other methods requires referencing different
-     Session Template resources.  For example, `login-params` like:
+     session-template resources.  For example, `login-params` like:
 
      ```
      {:href \"session-template/api-key\"
