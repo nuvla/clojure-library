@@ -10,7 +10,7 @@
   <parent>
     <groupId>sixsq.nuvla.parent</groupId>
     <artifactId>pom</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
   </parent>
 
   <licenses>
@@ -31,7 +31,7 @@
       </snapshots>
       <id>nuvla.releases</id>
       <name>Nuvla Releases</name>
-      <url>https://nexus.sixsq.com/content/repositories/nuvla-releases</url>
+      <url>s3://sixsq-artifact-releases/nuvla</url>
     </repository>
 
     <repository>
@@ -43,7 +43,7 @@
       </snapshots>
       <id>nuvla.snapshots</id>
       <name>Nuvla Snapshots</name>
-      <url>https://nexus.sixsq.com/content/repositories/nuvla-snapshots</url>
+      <url>s3://sixsq-artifact-snapshots/nuvla</url>
     </repository>
 
   </repositories>
