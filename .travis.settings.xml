@@ -6,12 +6,6 @@
   <servers>
                         
     <server>
-      <id>docker.io</id>
-      <username>${env.SIXSQ_DOCKER_USERNAME}</username>
-      <password>${env.SIXSQ_DOCKER_PASSWORD}</password>
-    </server>
-    
-    <server>
       <id>nuvla.snapshots</id>
       <username>${env.SIXSQ_NEXUS_USERNAME}</username>
       <password>${env.SIXSQ_NEXUS_PASSWORD}</password>
