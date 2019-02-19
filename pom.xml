@@ -7,12 +7,6 @@
   <packaging>pom</packaging>
   <name>clojure-library</name>
 
-  <parent>
-    <groupId>sixsq.nuvla.parent</groupId>
-    <artifactId>pom</artifactId>
-    <version>1.1.0</version>
-  </parent>
-
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -48,6 +42,20 @@
 
   </repositories>
 
+  <distributionManagement>
+    <repository>
+      <id>nuvla.releases</id>
+      <name>Nuvla Releases</name>
+      <url>s3://sixsq-artifact-releases/nuvla</url>
+    </repository>
+
+    <snapshotRepository>
+      <id>nuvla.snapshots</id>
+      <name>Nuvla Snapshots</name>
+      <url>s3://sixsq-artifact-snapshots/nuvla</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <profiles>
     <profile>
       <id>run-tests</id>
@@ -61,6 +69,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
+            <version>1.6.0</version>
             <executions>
               <execution>
                 <id>lein-test</id>
@@ -83,8 +92,51 @@
   </profiles>
 
   <build>
+    <extensions>
+      
+      <!-- provide build time details for modules and plugins -->
+      <extension>
+        <groupId>co.leantechniques</groupId>
+        <artifactId>maven-buildtime-extension</artifactId>
+        <version>2.0.1</version>
+      </extension>
+
+      <!-- allows use of S3 for artifacts -->
+      <extension>
+        <groupId>com.gkatzioura.maven.cloud</groupId>
+        <artifactId>s3-storage-wagon</artifactId>
+        <version>1.8</version>
+      </extension>
+
+    </extensions>
+
     <plugins>
 
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+	<artifactId>properties-maven-plugin</artifactId>
+        <version>1.0.0</version>
+	<executions>
+          <execution>
+            <goals>
+              <goal>set-system-properties</goal>
+	    </goals>
+            <configuration>
+              <properties>
+		<property>
+                  <name>S3_ENDPOINT</name>
+                  <value>https://sos-ch-gva-2.exo.io</value>
+                </property>
+                <property>
+                  <name>AWS_DEFAULT_REGION</name>
+                  <value>ch-gva-2</value>
+                </property>
+              </properties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+          
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
