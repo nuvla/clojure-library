@@ -10,10 +10,10 @@
             :url          "http://www.apache.org/licenses/LICENSE-2.0.txt"
             :distribution :repo}
 
-  :plugins [[lein-parent "0.3.2"]
-            [lein-doo "0.1.8"]]
+  :plugins [[lein-parent "0.3.5"]
+            [lein-doo "0.1.11"]]
 
-  :parent-project {:coords  [sixsq.nuvla/parent "6.1.0"]
+  :parent-project {:coords  [sixsq.nuvla/parent "6.1.3"]
                    :inherit [:plugins
                              :min-lein-version
                              :managed-dependencies
@@ -44,11 +44,12 @@
    [com.cemerick/url]
    [org.clojure/data.json]
    [org.clojure/core.async]
-   [io.nervous/kvlt]]
+   [io.nervous/kvlt]
+   ]
 
   :cljsbuild {:builds [{:id           "test"
                         :source-paths ["test/cljc" "test/cljs"]
-                        :compiler     {:main          'sixsq.nuvla.client.runner
+                        :compiler     {:main          sixsq.nuvla.client.runner
                                        :output-to     "target/clienttest.js"
                                        :output-dir    "target"
                                        :optimizations :whitespace}}]}
