@@ -5,9 +5,12 @@ jdk:
 cache:
   directories:
   - "$HOME/.m2"
+install:
+  provider: script
+  script: lein do clean, test, install
 deploy:
   provider: script
-  script: mvn -B deploy
+  script: lein deploy
   skip_cleanup: true
 env:
   global:
