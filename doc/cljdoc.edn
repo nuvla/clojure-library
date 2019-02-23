@@ -1,0 +1,5 @@
+{:cljdoc.doc/tree
+ [["Getting Started" {:file "doc/getting-started.md"}]
+  ["Changelog" {:file "doc/changelog.md"}]
+  ["Developer Info" {:file "doc/developer-info.md"}]
+  ["Legal" {:file "doc/legal.md"}]]}

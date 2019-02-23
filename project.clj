@@ -29,13 +29,6 @@
   :aot [sixsq.nuvla.client.api
         sixsq.nuvla.client.authn]
 
-  :codox {:name         "sixsq.nuvla/clojure-library"
-          :version      ~+version+
-          :source-paths #{"src/clj" "src/cljc"}
-          :source-uri   "https://github.com/nuvla/clojure-library/blob/master/jar/{filepath}#L{line}"
-          :language     :clojure
-          :metadata     {:doc/format :markdown}}
-
   :doo {:verbose true
         :debug   true}
 
@@ -44,8 +37,18 @@
    [com.cemerick/url]
    [org.clojure/data.json]
    [org.clojure/core.async]
-   [io.nervous/kvlt]
-   ]
+   [io.nervous/kvlt]]
+
+  :release-tasks [["vcs" "assert-committed"]
+                  ["change" "version" "leiningen.release/bump-version" "release"]
+                  ["vcs" "commit"]
+                  ["vcs" "tag" "--no-sign"]
+                  ["deploy" "clojars"]
+                  ["change" "version" "leiningen.release/bump-version"]
+                  ["vcs" "commit"]
+                  ["vcs" "push"]]
+
+  :vcs :git
 
   :cljsbuild {:builds [{:id           "test"
                         :source-paths ["test/cljc" "test/cljs"]
@@ -62,5 +65,4 @@
 
   :aliases {"test"    ["do"
                        ["test"]
-                       ["with-profiles" "test" ["doo" "nashorn" "test" "once"]]]
-            "docs"    ["codox"]})
+                       ["with-profiles" "test" ["doo" "nashorn" "test" "once"]]]})

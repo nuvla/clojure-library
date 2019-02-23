@@ -1,9 +1,40 @@
-# Clojure Library for the Nuvla REST API
+# Getting Started
+
+## Introduction
+
+Nuvla provides an application management platform for edge computing
+infrastructures. This library facilitates use of the Nuvla API from
+the Clojure programming language.
 
 The Nuvla API is inspired by the
 [CIMI](https://www.dmtf.org/standards/cloud) standard from
 [DMTF](http://dmtf.org).  For ease of use and consistency, there are
-numerous differences from the CIMI standard.
+numerous differences between the Nuvla API and the CIMI standard.
+Consequently, this library will not function as a general CIMI API
+client.
+
+## Installation
+
+Install the Nuvla clojure library jar file as a dependency of your
+project. For leiningen, for example, include the following dependency:
+
+```
+[sixsq.nuvla/clojure-library]
+```
+
+The primary namespaces that you will use are:
+
+ - `sixsq.nuvla.client.api`, which contains the protocols for all the
+   clients,
+
+ - `sixsq.nuvla.client.async`, an asynchronous client that implements
+   the API protocols,
+
+ - `sixsq.nuvla.client.sync`, a synchronous client that implements the
+   API protocols (Clojure only).
+
+You will need to have access to a running Nuvla platform and an
+account on that platform.
 
 ## Usage
 
@@ -86,7 +117,7 @@ core.async channel.
 
 ```
 
-When creating the client context without specific endpoints, then
-the endpoints for the Nuvla service will be used.  See the API
+When creating the client context without specific endpoints, then the
+endpoints for the public Nuvla service will be used.  See the API
 documentation for details on specifying the endpoints or other
-options. 
+options.
