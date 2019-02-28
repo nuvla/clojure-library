@@ -1,5 +1,3 @@
-(def +version+ "0.0.1-SNAPSHOT")
-
 (defproject sixsq.nuvla/api "0.0.2-SNAPSHOT"
 
   :description "nuvla clojure library"
