@@ -1,4 +1,6 @@
-(defproject sixsq.nuvla/api "0.0.2-SNAPSHOT"
+(def parent-version "6.3.0")
+
+(defproject sixsq.nuvla/api "0.9.0-SNAPSHOT"
 
   :description "nuvla clojure library"
 
@@ -11,7 +13,7 @@
   :plugins [[lein-parent "0.3.5"]
             [lein-doo "0.1.11"]]
 
-  :parent-project {:coords  [sixsq.nuvla/parent "6.2.0"]
+  :parent-project {:coords  [sixsq.nuvla/parent ~parent-version]
                    :inherit [:plugins
                              :min-lein-version
                              :managed-dependencies

@@ -41,13 +41,16 @@ means that the above environmental variable is not set.
 
 ### Pushing to Clojars
 
-**Be sure that you've done all of the setup in the previous section!**
+**Before** creating the release:
 
-To release this to clojars, just run the command:
+ - **Be sure that you've done all of the setup in the previous
+   section!**
 
-    lein release :patch
+ - Decide what semantic version to use for this release and change the
+   version in `project.clj`. (It should still have the "-SNAPSHOT"
+   suffix.) 
 
-This will bump the patch version of the artifact.
+ - Update the changelog.
 
 In general, use the following guidelines when choosing how to change
 the version:
@@ -58,8 +61,27 @@ the version:
    dependencies or delete dependencies
  - :major for major changes such as changing repository definitions
 
-After releasing a new version on clojars, verify that the artifact is
-visible. It should show up under `sixsq.nuvla/api`.
+Again, be sure to set the version **before** tagging the release.
+
+Check that everything builds correctly with:
+
+    lein do clean, test, jar, install
+
+Ensure that all changes are checked into GitHub.  The release will
+fail if there are local changes.
+
+To tag the code and release the jar to clojars, just run the command:
+
+    lein release :patch
+
+This will do everything necessary and will bump the patch version of
+the artifact at the end of the process. You will be prompted for the
+passphrase of the GPG key.
+
+After releasing a new version on clojars, you should check that the
+jar is available from clojars (`sixsq.nuvla/api`) and then communicate
+the availability of the new release to the coordinators of dependent
+components.
 
 # Copyright
 
