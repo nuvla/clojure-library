@@ -26,10 +26,10 @@
 (def example-event
   {:id          "123"
    :resourceURI "http://schemas.dmtf.org/cimi/2/Event"
-   :created     "2015-01-16T08:20:00.0Z"
-   :updated     "2015-01-16T08:20:00.0Z"
+   :created     "2015-01-16T08:20:00.00Z"
+   :updated     "2015-01-16T08:20:00.00Z"
 
-   :timestamp   "2015-01-10T08:20:00.0Z"
+   :timestamp   "2015-01-10T08:20:00.00Z"
    :content     {:resource {:href "Run/45614147-aed1-4a24-889d-6365b0b1f2cd"}
                  :state    "Started"}
    :type        "state"
