@@ -1,5 +1,7 @@
 # Nuvla Clojure Client Library
 
+[![Build Status](https://travis-ci.com/nuvla/clojure-library.svg?branch=master)](https://travis-ci.com/nuvla/clojure-library)
+
 Nuvla client library to facilitate interaction with the Nuvla REST API
 via the Clojure language.
 
