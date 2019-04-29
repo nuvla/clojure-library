@@ -1,7 +1,7 @@
 (ns ^{:no-doc true} sixsq.nuvla.client.impl.async
-  "Provides the core, low-level functions for SCRUD actions on CIMI resources.
+  "Provides the core, low-level functions for SCRUD actions on Nuvla resources.
    These are details of the implementation and are not a part of the public
-   CIMI API.
+   API.
 
    Unless otherwise stated, all functions in this namespace return a
    core.async channel with the function's result.
@@ -86,7 +86,7 @@
 
 
 (defn add
-  "Creates a new CIMI resource within the collection identified by the
+  "Creates a new resource within the collection identified by the
    collection type or URL. The data will be converted into a JSON string before
    being sent to the server. The data must match the schema of the resource."
   [{:keys [token cep] :as state} collection-type-or-url data options]
@@ -100,7 +100,7 @@
 
 
 (defn edit
-  "Updates an existing CIMI resource identified by the URL or resource id."
+  "Updates an existing resource identified by the URL or resource id."
   [{:keys [token cep] :as state} url-or-id data options]
   (go
     (if-let [edit-url (<! (get-resource-op-url state "edit" url-or-id options))]
@@ -112,7 +112,7 @@
 
 
 (defn delete
-  "Deletes the CIMI resource identified by the URL or resource id from the
+  "Deletes the resource identified by the URL or resource id from the
    server."
   [{:keys [token cep] :as state} url-or-id options]
   (go
@@ -125,7 +125,7 @@
 
 
 (defn get
-  "Reads the CIMI resource identified by the URL or resource id. Returns the
+  "Reads the resource identified by the URL or resource id. Returns the
    resource as an edn data structure in a channel."
   [{:keys [token cep] :as state} url-or-id options]
   (let [url (cu/ensure-url (:base-uri cep) url-or-id)]
@@ -136,7 +136,7 @@
 
 
 (defn get-sse
-  "Reads the CIMI resource identified by the URL or resource id. Returns the
+  "Reads the resource identified by the URL or resource id. Returns the
    resource as an edn data structure in a channel."
   [{:keys [token cep] :as state} url-or-id options]
   (http/sse (cu/ensure-url (:base-uri cep) url-or-id)
@@ -145,7 +145,7 @@
 
 
 (defn search
-  "Search for CIMI resources within the collection identified by its type or
+  "Search for resources within the collection identified by its type or
    URL, returning a list of the matching resources (in a channel). The list
    will be wrapped within an envelope containing the metadata of the collection
    and search."
@@ -166,7 +166,7 @@
 
 
 (defn search-sse
-  "Search for CIMI resources within the collection identified by its type or
+  "Search for resources within the collection identified by its type or
    URL, returning a list of the matching resources (in a channel). The list
    will be wrapped within an envelope containing the metadata of the collection
    and search."
@@ -180,7 +180,7 @@
 
 
 (defn operation
-  "Reads the CIMI resource identified by the URL or resource id and then
+  "Reads the resource identified by the URL or resource id and then
    'executes' the given operation."
   [{:keys [token cep] :as state} url-or-id operation data options]
   (go
@@ -194,7 +194,7 @@
 
 (defn cloud-entry-point
   "Retrieves the cloud entry point from the given endpoint. The cloud entry
-   point acts as a directory of the available resources within the CIMI server.
+   point acts as a directory of the available resources within the server.
    This returns a channel which will contain the cloud entry point in edn
    format."
   [endpoint options]

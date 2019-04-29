@@ -39,16 +39,16 @@ account on that platform.
 ## Usage
 
 The search (search), create (add), read (get), update (edit), and
-delete (delete) operations are defined in the `cimi` protocol in the
+delete (delete) operations are defined in the `api` protocol in the
 `sixsq.nuvla.client.api` namespace.  A separate namespace
-`sixsq.nuvla.client.authn` wraps some of the CIMI functions to
-simplify the authentication process.
+`sixsq.nuvla.client.authn` wraps some of the functions to simplify the
+authentication process.
 
-To use the CIMI and authn protocol functions, you must instantiate either
-a synchronous or asynchronous implementation of those protocols.  The
-synchronous implementation directly returns the results of the
-functions, while the asynchronous implementation always returns a
-core.async channel.
+To use the api and authn protocol functions, you must instantiate
+either a synchronous or asynchronous implementation of those
+protocols.  The synchronous implementation directly returns the
+results of the functions, while the asynchronous implementation always
+returns a core.async channel.
 
 ```clojure
 ;; Demonstrating use from the REPL

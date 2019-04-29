@@ -1,5 +1,5 @@
 (ns sixsq.nuvla.client.sync
-  "A synchronous implementation of the CIMI protocol. All functions return the
+  "A synchronous implementation of the api protocol. All functions return the
    results as a clojure data structure.
 
    NOTE: The synchronous version of the API is **only available in Clojure**."
@@ -75,7 +75,7 @@
 
 (defn instance
   "A convenience function for creating a synchronous, concrete instance of the
-   CIMI protocol. Use of this function is strongly preferred to the raw
+   api protocol. Use of this function is strongly preferred to the raw
    constructor (`->cimi-sync`).
 
    If the endpoint is not provided or is nil, the default endpoint will be
@@ -89,7 +89,7 @@
        using Clojure.
 
    You can override your provided defaults by specifying options directly on
-   the individual CIMI function calls."
+   the individual function calls."
   ([]
    (->cimi-sync (async/instance)))
   ([endpoint]

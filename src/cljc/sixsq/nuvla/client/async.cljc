@@ -1,5 +1,5 @@
 (ns sixsq.nuvla.client.async
-  "An asynchronous implementation of the CIMI protocol that returns core.async
+  "An asynchronous implementation of the api protocol that returns core.async
    channels from all functions. The returned channel contains a single result
    (or error message) unless an event stream was requested."
   (:refer-clojure :exclude [get])
@@ -139,7 +139,7 @@
 
 (defn instance
   "A convenience function for creating an asynchronous, concrete instance of
-   the CIMI protocol. All the CIMI functions for this client return a
+   the api protocol. All the api functions for this client return a
    core.async channel. Use of this function is strongly preferred to the raw
    constructor (`->cimi-async`).
 
@@ -160,7 +160,7 @@
        only accept `:message` events.
 
    You can override your provided defaults by specifying options directly on
-   the individual CIMI function calls."
+   the individual function calls."
   ([]
    (instance nil nil))
   ([cep-endpoint]

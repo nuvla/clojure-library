@@ -3,7 +3,7 @@
 
 (defprotocol api
   "This protocol (interface) defines all the SCRUD (search, create, read,
-   update, and delete) actions for CIMI resources. It also defines convenience
+   update, and delete) actions for resources. It also defines convenience
    functions for authenticating with the server and a function to execute
    specialized operations on a given resource or collection.
 
@@ -32,7 +32,7 @@
     [this]
     [this options]
     "Retrieves the cloud entry point from the server. The cloud entry point
-     (CEP) acts as a directory of the available resources within the CIMI
+     (CEP) acts as a directory of the available resources within the
      server. This function does not require authentication. The result is
      returned in EDN format. Implementations may cache the cloud entry point to
      avoid unnecessary requests to the server.")
@@ -40,7 +40,7 @@
   (add
     [this resource-type data]
     [this resource-type data options]
-    "Creates a new CIMI resource of the given type. The data will be converted
+    "Creates a new resource of the given type. The data will be converted
      into a JSON string before being sent to the server. The data must match
      the schema of the resource type. Returns a map with the status, message,
      and created resource-id.")
@@ -48,20 +48,20 @@
   (edit
     [this url-or-id data]
     [this url-or-id data options]
-    "Updates an existing CIMI resource identified by the URL or resource id.
+    "Updates an existing resource identified by the URL or resource id.
      The data must be the complete, updated data of the resource. Returns the
      updated resource in EDN format.")
 
   (delete
     [this url-or-id]
     [this url-or-id options]
-    "Deletes the CIMI resource identified by the URL or resource id from the
+    "Deletes the resource identified by the URL or resource id from the
      server. Returns a map with a status and message.")
 
   (get
     [this url-or-id]
     [this url-or-id options]
-    "Reads the CIMI resource identified by the URL or resource id. Returns the
+    "Reads the resource identified by the URL or resource id. Returns the
      resource as EDN data. This function also supports the options:
 
       * `:sse?` - If set to true, the function will return an event stream of
@@ -74,12 +74,12 @@
   (search
     [this resource-type]
     [this resource-type options]
-    "Search for CIMI resources of the given type, returning a list of the
+    "Search for resources of the given type, returning a list of the
      matching resources. The list will be wrapped within an envelope containing
      the metadata of the collection and search. The returned document is in EDN
      format.
 
-     This function also supports all of the CIMI query options: `:first`,
+     This function also supports all of the query options: `:first`,
      `:last`, `:filter`, `:orderby`, `:select`, `:aggregation`. It also
      supports the `:sse?` and `:events` options described in the `get` function
      description.")

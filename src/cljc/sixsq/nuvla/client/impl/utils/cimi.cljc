@@ -1,5 +1,5 @@
 (ns ^{:no-doc true} sixsq.nuvla.client.impl.utils.cimi
-  "Provides utilities that support the SCRUD actions for CIMI resources.
+  "Provides utilities that support the SCRUD actions for Nuvla resources.
    Although these functions are public, they are not part of the public
    API and may change without notice."
   (:refer-clojure :exclude [read])
