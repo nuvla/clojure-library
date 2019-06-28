@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased]
+## [2.0.1] - 2019-06-28
+
+### Changed
+
+  - Update to parent version 6.5.1.
 
 ## [2.0.0] - 2019-04-29
 
