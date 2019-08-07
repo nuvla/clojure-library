@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.0.3] - 2019-08-07
+
+### Changed
+
+  - Convert string to json only when possible
 
 ## [2.0.2] - 2019-07-30
 
