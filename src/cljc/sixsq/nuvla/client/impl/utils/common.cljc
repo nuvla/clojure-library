@@ -3,7 +3,7 @@
    Although these functions are public, they are not part of the public
    API and may change without notice.")
 
-;; The the :follow-redirects setting asks that redirects are handled
+;; The :follow-redirects setting asks that redirects are handled
 ;; directly by the client rather than by the underlying HTTP library.
 ;; However those HTTP libraries, particularly XHR from browsers, will
 ;; still handle redirects automatically. Be careful of this behavior.

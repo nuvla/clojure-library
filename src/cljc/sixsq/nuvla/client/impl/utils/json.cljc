@@ -23,8 +23,14 @@
 
 
 (defn str->json [s]
-  #?(:clj  (json/read-str s :key-fn keyword)
-     :cljs (js->clj (js/JSON.parse s) :keywordize-keys true)))
+  #?(:clj  (try
+             (json/read-str s :key-fn keyword)
+             (catch Exception _
+               s))
+     :cljs (try
+             (js->clj (js/JSON.parse s) :keywordize-keys true)
+             (catch :default _
+               s))))
 
 
 (defn edn->json [edn]
