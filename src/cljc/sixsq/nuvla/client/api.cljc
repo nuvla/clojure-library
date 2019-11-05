@@ -84,6 +84,13 @@
      supports the `:sse?` and `:events` options described in the `get` function
      description.")
 
+  (delete-bulk
+    [this resource-type filter]
+    [this resource-type filter options]
+    "Bulk delete for resources of the given type, returning metadata of the
+     operation execution. The returned document is in EDN format. Filter must be
+     a non-empty string.")
+
   (operation
     [this url-or-id operation]
     [this url-or-id operation data]
