@@ -125,7 +125,7 @@
             response)))))
 
   (delete-bulk [this resource-type filter]
-    (api/delete-bulk this resource-type filter))
+    (api/delete-bulk this resource-type filter nil))
   (delete-bulk [this resource-type filter options]
     (let [opts (merge (:default-options @state) options)]
       (go
