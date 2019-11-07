@@ -124,6 +124,16 @@
             (u/update-state state :token token)
             response)))))
 
+  (delete-bulk [this resource-type filter]
+    (api/delete-bulk this resource-type filter nil))
+  (delete-bulk [this resource-type filter options]
+    (let [opts (merge (:default-options @state) options)]
+      (go
+        (<! (api/cloud-entry-point this opts))
+        (let [[response token] (<! (cimi-impl/delete-bulk @state resource-type filter opts))]
+          (u/update-state state :token token)
+          response))))
+
   (operation [this url-or-id operation]
     (api/operation this url-or-id operation nil nil))
   (operation [this url-or-id operation data]

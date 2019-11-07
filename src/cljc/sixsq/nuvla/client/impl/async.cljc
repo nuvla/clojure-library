@@ -179,10 +179,31 @@
                       token (assoc :options {:headers {:cookie token}})))))
 
 
+(defn delete-bulk
+  "Bulk delete for resources within the collection identified by its type or
+   URL, returning result metadata of the operation (in a channel)."
+  [{:keys [token cep] :as state} collection-type-or-url filter
+   {:keys [insecure? user-token] :as options}]
+  (let [url (or (u/get-collection-url cep collection-type-or-url)
+                (u/verify-collection-url cep collection-type-or-url))
+        token-request (if user-token user-token token)
+        query-string (url/map->query {:filter filter})]
+    (let [query-params (-> options
+                           u/remove-cimi-params
+                           u/remove-req-params)
+          opts (-> (cu/req-opts token-request query-string)
+                   (assoc :type "application/x-www-form-urlencoded")
+                   (assoc :query-params query-params)
+                   (assoc :insecure? insecure?)
+                   (assoc-in [:headers :bulk] "yes")
+                   assoc-chan)]
+      (http/delete url opts))))
+
+
 (defn operation
   "Reads the resource identified by the URL or resource id and then
    'executes' the given operation."
-  [{:keys [token cep] :as state} url-or-id operation data options]
+  [{:keys [token] :as state} url-or-id operation data options]
   (go
     (if-let [operation-url (<! (get-resource-op-url state operation url-or-id options))]
       (let [opts (-> (cu/req-opts token (json/edn->json data))

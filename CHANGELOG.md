@@ -1,5 +1,9 @@
 # Changelog
 
+### Changed
+
+  - Support bulk delete
+
 ## [2.0.3] - 2019-08-07
 
 ### Changed
