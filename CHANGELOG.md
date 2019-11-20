@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.5] - 2019-11-20
+
+### Changed
+
+  - Update to parent version 6.7.0.
+
 ## [2.0.4] - 2019-11-07
 
 ### Changed
