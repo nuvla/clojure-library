@@ -11,9 +11,7 @@ the `doc` directory and source files.
 
 ## Artifacts
 
- - `sixsq.nuvla/api` jar file: Jar file containing the Nuvla Clojure
-   API.  Available from
-   [clojars](https://clojars.org/sixsq.nuvla/api).
+[![Clojars Project](https://img.shields.io/clojars/v/sixsq.nuvla/api.svg)](https://clojars.org/sixsq.nuvla/api) 
 
 ## Contributing
 
