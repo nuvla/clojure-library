@@ -1,4 +1,4 @@
-(def parent-version "6.7.1")
+(def parent-version "6.7.2")
 
 (defproject sixsq.nuvla/api "2.0.7-SNAPSHOT"
 
