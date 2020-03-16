@@ -61,9 +61,9 @@
     [this]
     (api/cloud-entry-point this nil))
   (cloud-entry-point
-    [_ options]
+    [_ {:keys [no-cache] :as options}]
     (go
-      (or (:cep @state)
+      (or (if no-cache nil (:cep @state))
           (let [opts (merge (:default-options @state) options)
                 [cep token] (<! (cimi-impl/cloud-entry-point endpoint opts))]
             (u/update-state state :token token)

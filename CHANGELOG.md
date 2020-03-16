@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+  - Add no-cache option to cloud-entry-point call
+
 ## [2.0.7] - 2019-13-02
 
 ### Changed
