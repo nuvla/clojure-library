@@ -34,8 +34,9 @@
     "Retrieves the cloud entry point from the server. The cloud entry point
      (CEP) acts as a directory of the available resources within the
      server. This function does not require authentication. The result is
-     returned in EDN format. Implementations may cache the cloud entry point to
-     avoid unnecessary requests to the server.")
+     returned in EDN format. Implementations may cache the cloud entry point
+     to avoid unnecessary requests to the server. To disable cache you can
+     use no-cache option.")
 
   (add
     [this resource-type data]
