@@ -38,6 +38,10 @@
   [url & [req]]
   (request-async! :post url req))
 
+(defn patch
+  [url & [req]]
+  (request-async! :patch url req))
+
 (defn delete
   [url & [req]]
   (request-async! :delete url req))
