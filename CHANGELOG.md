@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [2.0.9] - 2021-03-24
+
 ### Changed
 
   - Support bulk operation
