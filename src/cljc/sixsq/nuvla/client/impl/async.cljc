@@ -65,8 +65,8 @@
   "Returns the URL for the given operation and collection within a channel.
    The collection can be identified either by its name or URL."
   [token {:keys [base-uri] :as cep} op collection-name-or-url options]
-  (let [url (or (u/get-collection-url cep collection-name-or-url)
-                (u/verify-collection-url cep collection-name-or-url))
+  (let [url  (or (u/get-collection-url cep collection-name-or-url)
+                 (u/verify-collection-url cep collection-name-or-url))
         opts (-> (cu/req-opts token (url/map->query {"last" 0}))
                  (merge options)
                  (assoc :type "application/x-www-form-urlencoded")
@@ -78,10 +78,10 @@
   "Returns the URL for the given operation and collection within a channel."
   [{:keys [token cep] :as state} op url-or-id options]
   (let [base-uri (:base-uri cep)
-        url (cu/ensure-url base-uri url-or-id)
-        opts (-> (cu/req-opts token)
-                 (merge options)
-                 (assoc-op-url-chan op base-uri))]
+        url      (cu/ensure-url base-uri url-or-id)
+        opts     (-> (cu/req-opts token)
+                     (merge options)
+                     (assoc-op-url-chan op base-uri))]
     (http/get url opts)))
 
 
@@ -150,19 +150,19 @@
    will be wrapped within an envelope containing the metadata of the collection
    and search."
   [{:keys [token cep] :as state} collection-type-or-url {:keys [insecure? user-token] :as options}]
-  (let [url (or (u/get-collection-url cep collection-type-or-url)
-                (u/verify-collection-url cep collection-type-or-url))
+  (let [url           (or (u/get-collection-url cep collection-type-or-url)
+                          (u/verify-collection-url cep collection-type-or-url))
         token-request (if user-token user-token token)
-        query-string (url/map->query (u/select-cimi-params options))]
-    (let [query-params (-> options
-                           u/remove-cimi-params
-                           u/remove-req-params)
-          opts (-> (cu/req-opts token-request query-string)
-                   (assoc :type "application/x-www-form-urlencoded")
-                   (assoc :query-params query-params)
-                   (assoc :insecure? insecure?)
-                   assoc-chan)]
-      (http/put url opts))))
+        query-string  (url/map->query (u/select-cimi-params options))
+        query-params  (-> options
+                          u/remove-cimi-params
+                          u/remove-req-params)
+        opts          (-> (cu/req-opts token-request query-string)
+                          (assoc :type "application/x-www-form-urlencoded")
+                          (assoc :query-params query-params)
+                          (assoc :insecure? insecure?)
+                          assoc-chan)]
+    (http/put url opts)))
 
 
 (defn search-sse
@@ -171,8 +171,8 @@
    will be wrapped within an envelope containing the metadata of the collection
    and search."
   [{:keys [token cep] :as state} collection-type-or-url options]
-  (let [url (or (u/get-collection-url cep collection-type-or-url)
-                (u/verify-collection-url cep collection-type-or-url))
+  (let [url          (or (u/get-collection-url cep collection-type-or-url)
+                         (u/verify-collection-url cep collection-type-or-url))
         query-string (url/map->query (u/select-cimi-params options))]
     (http/sse (str url "?" query-string)
               (cond-> (assoc-sse-chan (u/remove-cimi-params options))
@@ -184,20 +184,38 @@
    URL, returning result metadata of the operation (in a channel)."
   [{:keys [token cep] :as state} collection-type-or-url filter
    {:keys [insecure? user-token] :as options}]
-  (let [url (or (u/get-collection-url cep collection-type-or-url)
-                (u/verify-collection-url cep collection-type-or-url))
+  (let [url           (or (u/get-collection-url cep collection-type-or-url)
+                          (u/verify-collection-url cep collection-type-or-url))
         token-request (if user-token user-token token)
-        query-string (url/map->query {:filter filter})]
-    (let [query-params (-> options
-                           u/remove-cimi-params
-                           u/remove-req-params)
-          opts (-> (cu/req-opts token-request query-string)
-                   (assoc :type "application/x-www-form-urlencoded")
-                   (assoc :query-params query-params)
-                   (assoc :insecure? insecure?)
-                   (assoc-in [:headers :bulk] "yes")
-                   assoc-chan)]
-      (http/delete url opts))))
+        query-string  (url/map->query {:filter filter})
+        query-params  (-> options
+                          u/remove-cimi-params
+                          u/remove-req-params)
+        opts          (-> (cu/req-opts token-request query-string)
+                          (assoc :type "application/x-www-form-urlencoded")
+                          (assoc :query-params query-params)
+                          (assoc :insecure? insecure?)
+                          (assoc-in [:headers :bulk] "yes")
+                          assoc-chan)]
+    (http/delete url opts)))
+
+
+(defn operation-bulk
+  "Reads the collection identified by the URL or resource id and then
+   'executes' the given operation."
+  [{:keys [token cep] :as state} collection-type-or-url operation filter data
+   {:keys [insecure? user-token] :as options}]
+  (let [url           (str (or (u/get-collection-url cep collection-type-or-url)
+                               (u/verify-collection-url cep collection-type-or-url))
+                           "/" operation)
+        token-request (if user-token user-token token)
+        data-request  (json/edn->json (assoc (or data {}) :filter filter))
+        opts          (->
+                        (cu/req-opts token-request data-request)
+                        (assoc :insecure? insecure?)
+                        (assoc-in [:headers :bulk] "yes")
+                        assoc-chan)]
+    (http/patch url opts)))
 
 
 (defn operation

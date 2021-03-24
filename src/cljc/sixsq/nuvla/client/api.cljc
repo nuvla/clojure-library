@@ -92,6 +92,16 @@
      operation execution. The returned document is in EDN format. Filter must be
      a non-empty string.")
 
+
+  (operation-bulk
+    [this resource-type operation filter]
+    [this resource-type operation filter data]
+    [this resource-type operation filter data options]
+    "Bulk operation for resources of the given type, returning metadata of the
+     operation execution. The data is passed through to the server without any
+     validity checks. The function will return a map with the results of the
+     function call.")
+
   (operation
     [this url-or-id operation]
     [this url-or-id operation data]

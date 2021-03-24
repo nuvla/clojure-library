@@ -2,8 +2,11 @@
 
 ## Unreleased
 
+## [2.0.9] - 2021-03-24
+
 ### Changed
 
+  - Support bulk operation
   - Update to parent version 6.7.3
 
 ## [2.0.8] - 2020-03-17
