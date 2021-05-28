@@ -63,6 +63,8 @@
                         :source-paths   ["test/clj" "test/cljc"]
                         :resource-paths ["dev-resources"]}}
 
-  :aliases {"test"    ["do"
-                       ["test"]
-                       ["with-profiles" "test" ["doo" "nashorn" "test" "once"]]]})
+  :aliases {
+            ;"test"    ["do"
+            ;           ["test"]
+            ;           ["with-profiles" "test" ["doo" "nashorn" "test" "once"]]]
+            })
