@@ -1,4 +1,4 @@
-(def parent-version "6.7.5")
+(def parent-version "6.7.6")
 
 (defproject sixsq.nuvla/api "2.0.11-SNAPSHOT"
 
@@ -11,13 +11,7 @@
             :distribution :repo}
 
   :plugins [[lein-parent "0.3.5"]
-            [lein-doo "0.1.11"]
-            [lein-ancient "1.0.0-RC3"]
-            [jonase/eastwood "1.2.2"]
-            [lein-cloverage "1.2.2"]
-            [lein-kibit "0.1.8"]
-            [com.github.clj-kondo/lein-clj-kondo "0.1.3"]
-            [lein-nvd "1.9.0"]]
+            [lein-doo "0.1.11"]]
 
   :parent-project {:coords  [sixsq.nuvla/parent ~parent-version]
                    :inherit [:plugins
@@ -43,8 +37,7 @@
    [com.cemerick/url]
    [org.clojure/data.json]
    [org.clojure/core.async]
-   [io.nervous/kvlt]
-   [clj-kondo "RELEASE"]]
+   [io.nervous/kvlt]]
 
   :release-tasks [["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
@@ -65,10 +58,13 @@
                                        :optimizations :whitespace}}]}
 
   :profiles {:provided {:dependencies [[org.clojure/clojure]
-                                       [org.clojure/clojurescript]]}
+                                       [org.clojure/clojurescript]]
+                        }
              :test     {:aot            :all
                         :source-paths   ["test/clj" "test/cljc"]
-                        :resource-paths ["dev-resources"]}}
+                        :resource-paths ["dev-resources"]}
+             :dev {:dependencies [[com.fasterxml.jackson.core/jackson-databind "2.12.0"]
+                                  [clj-kondo "RELEASE"]]}}
 
   :aliases {
             ;"test"    ["do"
