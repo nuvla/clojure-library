@@ -63,7 +63,7 @@
              :test     {:aot            :all
                         :source-paths   ["test/clj" "test/cljc"]
                         :resource-paths ["dev-resources"]}
-             :dev {:dependencies [[com.fasterxml.jackson.core/jackson-databind "2.12.0"]
+             :dev {:dependencies [[com.fasterxml.jackson.core/jackson-databind "2.13.1"]
                                   [clj-kondo "RELEASE"]]}}
 
   :aliases {
