@@ -50,7 +50,7 @@ jobs:
         id: tests
         uses: Rishabh510/Path-lister-action@master
         with:
-          path: "code/test-reports"
+          path: "test-reports"
           type: ".xml"
 
       - name: Fail on failed tests
