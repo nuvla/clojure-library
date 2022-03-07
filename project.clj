@@ -62,7 +62,9 @@
                         }
              :test     {:aot            :all
                         :source-paths   ["test/clj" "test/cljc"]
-                        :resource-paths ["dev-resources"]}
+                        :resource-paths ["dev-resources"]
+                        :plugins [[lein-test-report-junit-xml "0.2.0"]]
+                        :test-report-junit-xml {:output-dir "test-reports"}}
              :dev {:dependencies [[com.fasterxml.jackson.core/jackson-databind "2.13.1"]
                                   [clj-kondo "RELEASE"]]}}
 
