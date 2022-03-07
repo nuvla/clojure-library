@@ -34,3 +34,4 @@ pom.xml.asc
 
 .scannerwork
 .eastwood
+test-reports/
