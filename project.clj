@@ -1,4 +1,4 @@
-(def parent-version "6.7.5")
+(def parent-version "6.7.6")
 
 (defproject sixsq.nuvla/api "2.0.11-SNAPSHOT"
 
@@ -58,10 +58,15 @@
                                        :optimizations :whitespace}}]}
 
   :profiles {:provided {:dependencies [[org.clojure/clojure]
-                                       [org.clojure/clojurescript]]}
+                                       [org.clojure/clojurescript]]
+                        }
              :test     {:aot            :all
                         :source-paths   ["test/clj" "test/cljc"]
-                        :resource-paths ["dev-resources"]}}
+                        :resource-paths ["dev-resources"]
+                        :plugins [[lein-test-report-junit-xml "0.2.0"]]
+                        :test-report-junit-xml {:output-dir "test-reports"}}
+             :dev {:dependencies [[com.fasterxml.jackson.core/jackson-databind "2.13.1"]
+                                  [clj-kondo "RELEASE"]]}}
 
   :aliases {
             ;"test"    ["do"
