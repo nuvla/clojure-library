@@ -6,14 +6,14 @@
    ```clojure
    (require '[sixsq.nuvla.client.cimi-sync-lifecycle-test :as t] :reload)
    (in-ns 'sixsq.nuvla.client.cimi-sync-lifecycle-test)
-   (def ^:dynamic *server-info* (set-server-info \"username\" \"password\" \"https://nuv.la/\"))
+   (def ^:dynamic *server-info* (set-server-info \"username\" \"password\" \"https://nuvla.io/\"))
    (run-tests)
    ```
 
    **NOTE**: The value for \"my-server-root\" must end with a slash!
    "
   (:require
-    [clojure.test :refer [are deftest is run-tests testing]]
+    [clojure.test :refer [deftest is]]
     [kvlt.core]
     [sixsq.nuvla.client.authn :as authn]
     [sixsq.nuvla.client.api :as cimi]
@@ -52,7 +52,7 @@
        :cep-endpoint endpoint})))
 
 ;; FIXME: Caution!  Do not commit credentials.
-(def ^:dynamic *server-info* (set-server-info nil nil "https://nuv.la/"))
+(def ^:dynamic *server-info* (set-server-info nil nil "https://nuvla.io/"))
 
 (defn strip-fields [m]
   (dissoc m :id :created :updated :acl :operations))

@@ -10,11 +10,12 @@
     [sixsq.nuvla.client.authn :as authn]
     [sixsq.nuvla.client.api :as api]
     [sixsq.nuvla.client.impl.async :as cimi-impl]
-    [sixsq.nuvla.client.impl.utils.cimi :as u]))
+    [sixsq.nuvla.client.impl.utils.cimi :as u]
+    [sixsq.nuvla.client.impl.utils.error :as e]))
 
 (def
   ^{:doc "Default cloud entry point endpoint defaults to the Nuvla service."}
-  default-cep-endpoint "https://nuv.la/api/cloud-entry-point")
+  default-cep-endpoint "https://nuvla.io/api/cloud-entry-point")
 
 (deftype cimi-async [endpoint state]
 
@@ -67,7 +68,8 @@
           (let [opts (merge (:default-options @state) options)
                 [cep token] (<! (cimi-impl/cloud-entry-point endpoint opts))]
             (u/update-state state :token token)
-            (u/update-state state :cep cep)
+            (when-not (e/error? cep)
+              (u/update-state state :cep cep))
             cep))))
 
   (add [this resource-type data]

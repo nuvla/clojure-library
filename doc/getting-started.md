@@ -70,7 +70,7 @@ returns a core.async channel.
 ;; Returns a channel on which a document with directory of available
 ;; resource is pushed. User does not need to be authenticated.
 (pprint (<!! (api/cloud-entry-point client-async)))
-;; {:baseURI "https://nuv.la/api/",
+;; {:baseURI "https://nuvla.io/api/",
 ;;  :connectors {:href "connector"},
 ;; ...
 

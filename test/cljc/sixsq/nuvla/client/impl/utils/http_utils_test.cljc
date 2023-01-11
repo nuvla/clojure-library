@@ -1,6 +1,6 @@
 (ns sixsq.nuvla.client.impl.utils.http-utils-test
   (:require
-    [clojure.test :refer [are deftest is run-tests testing]]
+    [clojure.test :refer [deftest is]]
     [sixsq.nuvla.client.impl.utils.http-utils :as h]))
 
 (deftest test-process-req
