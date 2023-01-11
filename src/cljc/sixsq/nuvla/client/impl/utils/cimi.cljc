@@ -108,7 +108,7 @@
 
 
 (defn get-collection-url
-  "Extracts the absolute URL for a the named collection from the cloud entry
+  "Extracts the absolute URL for the named collection from the cloud entry
    point. The collection name can be provided either as a string or a keyword
    (preferred). Returns nil if the collection does not exist."
   [{:keys [base-uri collections] :as cep} collection-name]

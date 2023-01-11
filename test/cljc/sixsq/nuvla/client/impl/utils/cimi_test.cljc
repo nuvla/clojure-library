@@ -3,7 +3,7 @@
   (:require
     [clojure.core.async :refer #?(:clj  [chan <! >! go <!!]
                                   :cljs [chan <! >!])]
-    [clojure.test :refer [#?(:cljs async) are deftest is run-tests testing]]
+    [clojure.test :refer [#?(:cljs async) are deftest is]]
     [sixsq.nuvla.client.impl.utils.cimi :as t]
     [sixsq.nuvla.client.impl.utils.json :as json]))
 

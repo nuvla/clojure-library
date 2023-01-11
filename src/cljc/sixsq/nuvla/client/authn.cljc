@@ -2,7 +2,7 @@
 
 (defprotocol authn
   "This protocol (interface) defines convenience functions that simplify
-   authentication with the SlipStream server.
+   authentication with the Nuvla server.
 
    To use the protocol you must instantiate a concrete implementation of the
    protocol. Synchronous and asynchronous implementations are available in the
@@ -28,7 +28,7 @@
   (login
     [this login-params]
     [this login-params options]
-    "Uses the given `login-params` to log into the SlipStream server. The
+    "Uses the given `login-params` to log into the Nuvla server. The
      `login-params` must be a map containing an `:href` element giving the id
      of the session-template resource and any other attributes required for the
      login method. The `login-params` for logging in with a username and
@@ -55,7 +55,7 @@
      ```
 
      could be used to authenticate with an API key/secret.  Note that the
-     template names will depend on the configuration of the SlipStream
+     template names will depend on the configuration of the Nuvla
      server.")
 
   (logout

@@ -6,7 +6,7 @@
    ```clojure
    (require '[sixsq.nuvla.client.cimi-async-lifecycle-test :as t] :reload)
    (in-ns 'sixsq.nuvla.client.cimi-async-lifecycle-test)
-   (def ^:dynamic *server-info* (set-server-info \"username\" \"password\" \"https://nuv.la/\"))
+   (def ^:dynamic *server-info* (set-server-info \"username\" \"password\" \"https://nuvla.io/\"))
    (run-tests)
    ```
 
@@ -55,7 +55,7 @@
        :cep-endpoint endpoint})))
 
 ;; FIXME: Caution!  Do not commit credentials.
-(def ^:dynamic *server-info* (set-server-info nil nil "https://nuv.la/"))
+(def ^:dynamic *server-info* (set-server-info nil nil "https://nuvla.io/"))
 
 (defn strip-fields [m]
   (dissoc m :id :created :updated :acl :operations))

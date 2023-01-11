@@ -15,10 +15,11 @@
   #?(:cljs (:require-macros [cljs.core.async.macros :refer [go]]))
   (:require
     [cemerick.url :as url]
-    [clojure.core.async :refer #?(:clj  [chan <! >! go]
+    [clojure.core.async :refer #?(:clj  [chan <! go]
                                   :cljs [chan <! >!])]
     [sixsq.nuvla.client.impl.utils.cimi :as u]
     [sixsq.nuvla.client.impl.utils.common :as cu]
+    [sixsq.nuvla.client.impl.utils.error :as e]
     [sixsq.nuvla.client.impl.utils.http-async :as http]
     [sixsq.nuvla.client.impl.utils.json :as json]))
 
@@ -76,7 +77,7 @@
 
 (defn get-resource-op-url
   "Returns the URL for the given operation and collection within a channel."
-  [{:keys [token cep] :as state} op url-or-id options]
+  [{:keys [token cep] :as _state} op url-or-id options]
   (let [base-uri (:base-uri cep)
         url      (cu/ensure-url base-uri url-or-id)
         opts     (-> (cu/req-opts token)
@@ -89,45 +90,51 @@
   "Creates a new resource within the collection identified by the
    collection type or URL. The data will be converted into a JSON string before
    being sent to the server. The data must match the schema of the resource."
-  [{:keys [token cep] :as state} collection-type-or-url data options]
+  [{:keys [token cep] :as _state} collection-type-or-url data options]
   (go
-    (if-let [add-url (<! (get-collection-op-url token cep "add" collection-type-or-url options))]
-      (let [opts (-> (cu/req-opts token (json/edn->json data))
-                     (merge options)
-                     assoc-chan)]
-        (<! (http/post add-url opts)))
-      (u/unauthorized collection-type-or-url))))
+    (let [url  (<! (get-collection-op-url token cep "add" collection-type-or-url options))
+          opts (-> (cu/req-opts token (json/edn->json data))
+                   (merge options)
+                   assoc-chan)]
+      (cond
+        (e/error? url) [url nil]
+        (nil? url) (u/unauthorized collection-type-or-url)
+        :else (<! (http/post url opts))))))
 
 
 (defn edit
   "Updates an existing resource identified by the URL or resource id."
-  [{:keys [token cep] :as state} url-or-id data options]
+  [{:keys [token _] :as state} url-or-id data options]
   (go
-    (if-let [edit-url (<! (get-resource-op-url state "edit" url-or-id options))]
-      (let [opts (-> (cu/req-opts token (json/edn->json data))
-                     (merge options)
-                     assoc-chan)]
-        (<! (http/put edit-url opts)))
-      (u/unauthorized url-or-id))))
+    (let [url  (<! (get-resource-op-url state "edit" url-or-id options))
+          opts (-> (cu/req-opts token (json/edn->json data))
+                   (merge options)
+                   assoc-chan)]
+      (cond
+        (e/error? url) [url nil]
+        (nil? url) (u/unauthorized url-or-id)
+        :else (<! (http/put url opts))))))
 
 
 (defn delete
   "Deletes the resource identified by the URL or resource id from the
    server."
-  [{:keys [token cep] :as state} url-or-id options]
+  [{:keys [token _] :as state} url-or-id options]
   (go
-    (if-let [delete-url (<! (get-resource-op-url state "delete" url-or-id options))]
-      (let [opts (-> (cu/req-opts token)
-                     (merge options)
-                     assoc-chan)]
-        (<! (http/delete delete-url opts)))
-      (u/unauthorized url-or-id))))
+    (let [url  (<! (get-resource-op-url state "delete" url-or-id options))
+          opts (-> (cu/req-opts token)
+                   (merge options)
+                   assoc-chan)]
+      (cond
+        (e/error? url) [url nil]
+        (nil? url) (u/unauthorized url-or-id)
+        :else (<! (http/delete url opts))))))
 
 
 (defn get
   "Reads the resource identified by the URL or resource id. Returns the
    resource as an edn data structure in a channel."
-  [{:keys [token cep] :as state} url-or-id options]
+  [{:keys [token cep] :as _state} url-or-id options]
   (let [url (cu/ensure-url (:base-uri cep) url-or-id)]
     (let [opts (-> (cu/req-opts token)
                    (merge options)
@@ -138,7 +145,7 @@
 (defn get-sse
   "Reads the resource identified by the URL or resource id. Returns the
    resource as an edn data structure in a channel."
-  [{:keys [token cep] :as state} url-or-id options]
+  [{:keys [token cep] :as _state} url-or-id options]
   (http/sse (cu/ensure-url (:base-uri cep) url-or-id)
             (cond-> (assoc-sse-chan options)
                     token (assoc :options {:headers {:cookie token}}))))
@@ -149,7 +156,7 @@
    URL, returning a list of the matching resources (in a channel). The list
    will be wrapped within an envelope containing the metadata of the collection
    and search."
-  [{:keys [token cep] :as state} collection-type-or-url {:keys [insecure? user-token] :as options}]
+  [{:keys [token cep] :as _state} collection-type-or-url {:keys [insecure? user-token] :as options}]
   (let [url           (or (u/get-collection-url cep collection-type-or-url)
                           (u/verify-collection-url cep collection-type-or-url))
         token-request (if user-token user-token token)
@@ -170,7 +177,7 @@
    URL, returning a list of the matching resources (in a channel). The list
    will be wrapped within an envelope containing the metadata of the collection
    and search."
-  [{:keys [token cep] :as state} collection-type-or-url options]
+  [{:keys [token cep] :as _state} collection-type-or-url options]
   (let [url          (or (u/get-collection-url cep collection-type-or-url)
                          (u/verify-collection-url cep collection-type-or-url))
         query-string (url/map->query (u/select-cimi-params options))]
@@ -182,7 +189,7 @@
 (defn delete-bulk
   "Bulk delete for resources within the collection identified by its type or
    URL, returning result metadata of the operation (in a channel)."
-  [{:keys [token cep] :as state} collection-type-or-url filter
+  [{:keys [token cep] :as _state} collection-type-or-url filter
    {:keys [insecure? user-token] :as options}]
   (let [url           (or (u/get-collection-url cep collection-type-or-url)
                           (u/verify-collection-url cep collection-type-or-url))
@@ -203,8 +210,8 @@
 (defn operation-bulk
   "Reads the collection identified by the URL or resource id and then
    'executes' the given operation."
-  [{:keys [token cep] :as state} collection-type-or-url operation filter data
-   {:keys [insecure? user-token] :as options}]
+  [{:keys [token cep] :as _state} collection-type-or-url operation filter data
+   {:keys [insecure? user-token] :as _options}]
   (let [url           (str (or (u/get-collection-url cep collection-type-or-url)
                                (u/verify-collection-url cep collection-type-or-url))
                            "/" operation)
@@ -223,12 +230,14 @@
    'executes' the given operation."
   [{:keys [token] :as state} url-or-id operation data options]
   (go
-    (if-let [operation-url (<! (get-resource-op-url state operation url-or-id options))]
-      (let [opts (-> (cu/req-opts token (json/edn->json data))
-                     (merge options)
-                     assoc-chan)]
-        (<! (http/post operation-url opts)))
-      (u/unknown-operation url-or-id))))
+    (let [url  (<! (get-resource-op-url state operation url-or-id options))
+          opts (-> (cu/req-opts token (json/edn->json data))
+                   (merge options)
+                   assoc-chan)]
+      (cond
+        (e/error? url) [url nil]
+        (nil? url) (u/unauthorized url-or-id)
+        :else (<! (http/post url opts))))))
 
 
 (defn cloud-entry-point
@@ -274,5 +283,3 @@
    (login state login-params nil))
   ([state login-params options]
    (add state :session {:template login-params} options)))
-
-
