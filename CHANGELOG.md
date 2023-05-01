@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## Released
+
 ## [2.0.11] - 2023-01-11
 
 ### Changed
