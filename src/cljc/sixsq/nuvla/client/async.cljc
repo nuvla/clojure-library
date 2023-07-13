@@ -5,8 +5,8 @@
   (:refer-clojure :exclude [get])
   #?(:cljs (:require-macros [cljs.core.async.macros :refer [go]]))
   (:require
-    [clojure.core.async :refer #?(:clj  [chan >! <! go]
-                                  :cljs [chan >! <!])]
+    [clojure.core.async :refer #?(:clj  [<! go]
+                                  :cljs [<!])]
     [sixsq.nuvla.client.authn :as authn]
     [sixsq.nuvla.client.api :as api]
     [sixsq.nuvla.client.impl.async :as cimi-impl]

@@ -47,5 +47,5 @@
   (request-async! :delete url req))
 
 (defn sse
-  [url & [{:keys [options] :as opts}]]
+  [url & [opts]]
   (request-event-source! url opts))
