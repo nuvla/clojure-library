@@ -1,6 +1,6 @@
 (def parent-version "6.7.13")
 
-(defproject sixsq.nuvla/api "2.0.12"
+(defproject sixsq.nuvla/api "2.0.13-SNAPSHOT"
 
   :description "nuvla clojure library"
 
