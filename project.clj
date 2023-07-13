@@ -1,4 +1,4 @@
-(def parent-version "6.7.12")
+(def parent-version "6.7.13")
 
 (defproject sixsq.nuvla/api "2.0.12-SNAPSHOT"
 
@@ -10,7 +10,7 @@
             :url          "http://www.apache.org/licenses/LICENSE-2.0.txt"
             :distribution :repo}
 
-  :plugins [[lein-parent "0.3.5"]
+  :plugins [[lein-parent "0.3.9"]
             [lein-doo "0.1.11"]]
 
   :parent-project {:coords  [sixsq.nuvla/parent ~parent-version]
@@ -65,7 +65,7 @@
                         :resource-paths ["dev-resources"]
                         :plugins [[lein-test-report-junit-xml "0.2.0"]]
                         :test-report-junit-xml {:output-dir "test-reports"}}
-             :dev {:dependencies [[com.fasterxml.jackson.core/jackson-databind "2.13.1"]
+             :dev {:dependencies [[com.fasterxml.jackson.core/jackson-databind "2.15.2"]
                                   [clj-kondo "RELEASE"]]}}
 
   :aliases {
