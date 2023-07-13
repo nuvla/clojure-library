@@ -16,7 +16,7 @@
   (:require
     [cemerick.url :as url]
     [clojure.core.async :refer #?(:clj  [chan <! go]
-                                  :cljs [chan <! >!])]
+                                  :cljs [chan <!])]
     [sixsq.nuvla.client.impl.utils.cimi :as u]
     [sixsq.nuvla.client.impl.utils.common :as cu]
     [sixsq.nuvla.client.impl.utils.error :as e]
@@ -135,11 +135,11 @@
   "Reads the resource identified by the URL or resource id. Returns the
    resource as an edn data structure in a channel."
   [{:keys [token cep] :as _state} url-or-id options]
-  (let [url (cu/ensure-url (:base-uri cep) url-or-id)]
-    (let [opts (-> (cu/req-opts token)
-                   (merge options)
-                   assoc-chan)]
-      (http/get url opts))))
+  (let [url (cu/ensure-url (:base-uri cep) url-or-id)
+        opts (-> (cu/req-opts token)
+                 (merge options)
+                 assoc-chan)]
+    (http/get url opts)))
 
 
 (defn get-sse
