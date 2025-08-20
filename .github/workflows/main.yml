@@ -50,6 +50,11 @@ jobs:
           -Dsonar.token=${{ secrets.SONARQUBE_TOKEN}}
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
 
+      - name: List test reports
+        run: |
+          pwd
+          ls -lR test-reports
+
       - name: Get list of tests
         if: always()
         id: tests
