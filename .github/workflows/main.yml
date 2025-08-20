@@ -42,7 +42,7 @@ jobs:
           # provide GITHUB_TOKEN to get access to secrets.SONAR_TOKEN
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: sonar-scanner
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.token=${{ secrets.SONARQUBE_TOKEN}}
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
 
       - name: Get list of tests
