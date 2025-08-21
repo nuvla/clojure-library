@@ -12,7 +12,7 @@ jobs:
   job-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting for sonar
           fetch-depth: 0
@@ -21,7 +21,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-lein-${{ hashFiles('**/project.clj') }}
           restore-keys: |
             ${{ runner.os }}-maven-
             - name: Cache local Maven repository
@@ -36,6 +36,16 @@ jobs:
         uses: DeLaGuardo/setup-clojure@12.5
         with:
           lein: 2.11.2
+
+      # Ubuntu Repos on Azure fail often. Attempt to install before other
+      # long-running operations.
+      # xmllinter for tests checks
+      # jq for SonarQube Quality Gate check
+      - name: Install xmllinter and jq (for "Fail on failed tests")
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils jq
 
       - name: Setup Sonar Scanner
         uses: warchant/setup-sonar-scanner@v3
