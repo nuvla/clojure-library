@@ -6,6 +6,11 @@ on:
       - master
   pull_request:
   workflow_dispatch:
+    inputs:
+      PUSH_CLOJARS:
+        description: 'Push test-jar to clojars'
+        required: true
+        type: boolean
 
 jobs:
 
@@ -122,16 +127,15 @@ jobs:
         id: extract_branch
 
       - name: Build
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: lein do clean, jar, install
 
-      - name: Deploy
+      - name: Deploy to clojars
+        run: lein deploy clojars
+        if: ${{ inputs.PUSH_CLOJARS }}
+        shell: bash
         env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: lein deploy
+          CLOJARS_USERNAME: ${{ secrets.CLOJARS_USERNAME }}
+          CLOJARS_PASSWORD: ${{ secrets.CLOJARS_PASSWORD }}
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
