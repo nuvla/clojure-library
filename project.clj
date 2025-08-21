@@ -60,10 +60,13 @@
   :profiles {:provided {:dependencies [[org.clojure/clojure]
                                        [org.clojure/clojurescript]]
                         }
-             :test     {:aot            :all
+             :test     {
+                        ;:aot            :all
                         :source-paths   ["test/clj" "test/cljc"]
                         :resource-paths ["dev-resources"]
-                        :plugins [[lein-test-report-junit-xml "0.2.0"]]
+                        :plugins [[org.clojars.konstan/lein-test-report-sonar "0.0.4"]]
+                        :test-report-sonar {:output-dir     "test-reports"
+                                            :emit-junit-xml true}
                         :test-report-junit-xml {:output-dir "test-reports"}}
              :dev {:dependencies [[com.fasterxml.jackson.core/jackson-databind "2.15.2"]
                                   [clj-kondo "RELEASE"]]}}
