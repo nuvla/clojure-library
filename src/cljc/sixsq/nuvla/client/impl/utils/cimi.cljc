@@ -61,7 +61,7 @@
   "This extracts the HTTP response body (rendered as keywordized EDN) and the
    value of the set-cookie header and returns a tuple with the two values in
    that order."
-  [{:keys [body] {:keys [set-cookie]} :headers :as response}]
+  [{:keys [body] {:keys [set-cookie]} :headers :as _response}]
   [(json/json->edn body) set-cookie])
 
 
@@ -111,7 +111,7 @@
   "Extracts the absolute URL for the named collection from the cloud entry
    point. The collection name can be provided either as a string or a keyword
    (preferred). Returns nil if the collection does not exist."
-  [{:keys [base-uri collections] :as cep} collection-name]
+  [{:keys [base-uri collections] :as _cep} collection-name]
   (when (and base-uri collection-name)
     (let [collection (keyword collection-name)]
       (some->> collections
@@ -124,7 +124,7 @@
   "Verifies that the value of `collection-url` is the URL for one of the
    collections defined in the cloud entry point. If it is, then the URL is
    returned; if not, then nil is returned."
-  [{:keys [base-uri collections] :as cep} collection-url]
+  [{:keys [base-uri collections] :as _cep} collection-url]
   (when (and base-uri collection-url)
     (let [collection-urls-set (->> collections
                                    vals
